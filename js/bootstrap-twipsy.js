@@ -1,5 +1,5 @@
 /* ==========================================================
- * bootstrap-twipsy.js v1.3.0
+ * bootstrap-twipsy.js v1.4.0
  * http://twitter.github.com/bootstrap/javascript.html#twipsy
  * Adapted from the original jQuery.tipsy by Jason Frame
  * ==========================================================
@@ -20,6 +20,8 @@
 
 
 !function( $ ) {
+
+  "use strict"
 
  /* CSS TRANSITION SUPPORT (https://gist.github.com/373874)
   * ======================================================= */
@@ -69,7 +71,7 @@
         , tp
         , dimensions
 
-      if (this.getTitle() && this.enabled) {
+      if (this.hasContent() && this.enabled) {
         $tip = this.tip()
         this.setContent()
 
@@ -167,6 +169,10 @@
       }
     }
 
+  , hasContent: function () {
+      return this.getTitle()
+    }
+
   , getTitle: function() {
       var title
         , $e = this.$element
@@ -186,10 +192,7 @@
     }
 
   , tip: function() {
-      if (!this.$tip) {
-        this.$tip = $('<div class="twipsy" />').html('<div class="twipsy-arrow"></div><div class="twipsy-inner"></div>')
-      }
-      return this.$tip
+      return this.$tip = this.$tip || $('<div class="twipsy" />').html(this.options.template)
     }
 
   , validate: function() {
@@ -210,6 +213,10 @@
 
   , toggleEnabled: function() {
       this.enabled = !this.enabled
+    }
+
+  , toggle: function () {
+      this[this.tip().hasClass('in') ? 'hide' : 'show']()
     }
 
   }
@@ -318,10 +325,21 @@
   , offset: 0
   , title: 'title'
   , trigger: 'hover'
+  , template: '<div class="twipsy-arrow"></div><div class="twipsy-inner"></div>'
   }
 
+  $.fn.twipsy.rejectAttrOptions = [ 'title' ]
+
   $.fn.twipsy.elementOptions = function(ele, options) {
-    return $.metadata ? $.extend({}, options, $(ele).metadata()) : options
+    var data = $(ele).data()
+      , rejects = $.fn.twipsy.rejectAttrOptions
+      , i = rejects.length
+
+    while (i--) {
+      delete data[rejects[i]]
+    }
+
+    return $.extend({}, options, data)
   }
 
 }( window.jQuery || window.ender );
