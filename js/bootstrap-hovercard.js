@@ -26,6 +26,8 @@
   }
 
   var findPlacement = function(popup, ele) {
+    var end_x = $(ele).offset().left + $(popup).width()
+
     // check if the element is on the top half or bottom half of the window
     if ($(ele).offset().top <
         (($(window).height() - headerBuffer) / 2) + $(window).scrollTop()) {
