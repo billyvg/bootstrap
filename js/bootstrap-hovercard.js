@@ -214,9 +214,15 @@
 
     // bind events to the popover parent element
     this.live('mouseenter', function() {
-      $(this).data(name).enter()
+        var hover = $(this).data(name);
+        if (hover) {
+            hover.enter();
+        }
     }).live('mouseleave', function() {
-      $(this).data(name).leave()
+        var hover = $(this).data(name);
+        if (hover) {
+            hover.leave();
+        }
     })
     return this
   }
