@@ -207,9 +207,15 @@
 
     // bind events to the popover window
     $('.popover').live('mouseenter', function() {
-      $(this).data(twipsyData).enter()
+      var hover = $(this).data(twipsyData);
+      if (hover) {
+        hover.enter();
+      }
     }).live('mouseleave', function() {
-      $(this).data(twipsyData).leave()
+      var hover = $(this).data(twipsyData);
+      if (hover) {
+        hover.leave();
+      }
     })
 
     // bind events to the popover parent element
