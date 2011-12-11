@@ -154,19 +154,18 @@
       var enterTimer
         , that = this
 
+      this.tip().data(twipsyData, this)
       if (this.tip()) {
         clearTimeout(this.tip().data('leaveTimer'))
 
         if (!this.tip().hasClass('in')) {
           if (this.options.delayIn === 0) {
             this.show()
-            this.tip().data(twipsyData, this)
           }
           else {
             this.fixTitle()
             enterTimer = setTimeout(function() {
               that.show()
-              that.tip().data(twipsyData, that)
             }, this.options.delayIn)
             this.tip().data('enterTimer', enterTimer)
           }
