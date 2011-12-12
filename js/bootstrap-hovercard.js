@@ -84,12 +84,18 @@
         .css({
           left: arrowLoc
         });
-        this.tip().bind('mouseenter', function(e) {
-          that.enter();
-        });
-        this.tip().bind('mouseleave', function(e) {
-          that.leave();
-        });
+
+      this.tip().bind('mouseenter', function(e) {
+        that.enter();
+      });
+
+      this.tip().bind('mouseleave', function(e) {
+        that.leave();
+      });
+
+      if ($().spin) {
+        this.tip().find('.throbber').spin('small');
+      }
 
     }
 
