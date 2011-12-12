@@ -67,6 +67,7 @@
 
     show: function() {
       var arrowLoc
+        , that = this
 
       $.fn.twipsy.Twipsy.prototype.show.call(this)
 
@@ -82,7 +83,14 @@
         .find('.arrow')
         .css({
           left: arrowLoc
-        })
+        });
+        this.tip().bind('mouseenter', function(e) {
+          that.enter();
+        });
+        this.tip().bind('mouseleave', function(e) {
+          that.leave();
+        });
+
     }
 
   , setContent: function () {
@@ -154,18 +162,19 @@
       var enterTimer
         , that = this
 
-      this.tip().data(twipsyData, this)
       if (this.tip()) {
         clearTimeout(this.tip().data('leaveTimer'))
 
         if (!this.tip().hasClass('in')) {
           if (this.options.delayIn === 0) {
             this.show()
+            this.tip().data(twipsyData, this)
           }
           else {
             this.fixTitle()
             enterTimer = setTimeout(function() {
               that.show()
+              that.tip().data(twipsyData, that)
             }, this.options.delayIn)
             this.tip().data('enterTimer', enterTimer)
           }
@@ -204,32 +213,19 @@
     if (typeof options == 'object') options = $.extend({}, $.fn.hovercard.defaults, options)
     $.fn.twipsy.initWith.call(this, options, Hovercard, name)
 
-    // bind events to the popover window
-    $('.popover').live('mouseenter', function() {
-      var hover = $(this).data(twipsyData);
-      if (hover) {
-        hover.enter();
-      }
-    }).live('mouseleave', function() {
-      var hover = $(this).data(twipsyData);
-      if (hover) {
-        hover.leave();
-      }
-    })
-
     // bind events to the popover parent element
-    this.live('mouseenter', function() {
+    this.on('mouseenter', function() {
         var hover = $(this).data(name);
         if (hover) {
             hover.enter();
         }
-    }).live('mouseleave', function() {
+    }).on('mouseleave', function() {
         var hover = $(this).data(name);
         if (hover) {
             hover.leave();
         }
-    })
-    return this
+    });
+    return this;
   }
 
   $.fn.hovercard.defaults = $.extend({}, $.fn.twipsy.defaults, {
