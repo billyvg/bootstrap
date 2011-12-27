@@ -69,6 +69,8 @@
       var arrowLoc
         , that = this
 
+      this.tip()
+        .removeClass('topleft bottomleft topright bottomright above below')
       $.fn.twipsy.Twipsy.prototype.show.call(this)
 
       // TODO: clean this up so we don't have to do a DOM lookup
