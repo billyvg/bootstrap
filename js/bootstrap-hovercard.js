@@ -103,7 +103,6 @@
 
   , setContent: function () {
       var $tip = this.tip()
-      $tip.find('.title')[this.options.html ? 'html' : 'text'](this.getTitle())
       $tip.find('.content')[this.options.html ? 'html' : 'text'](this.getContent())
     }
 
@@ -123,7 +122,7 @@
   , tip: function() {
       if (!this.$tip) {
         this.$tip = $('<div class="popover" />')
-          .html('<div class="arrow"></div><div class="inner"><h3 class="title"></h3><div class="content"><p></p></div></div>')
+          .html('<div class="arrow"></div><div class="inner"><div class="content"><h3 class="title"></h3></div></div>')
       }
       return this.$tip
     }
