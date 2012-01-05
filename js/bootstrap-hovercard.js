@@ -231,6 +231,12 @@
         if (hover) {
             hover.leave();
         }
+    }).on('click', function(e) {
+        console.log('clicked', e);
+        var hover = $(this).data(name);
+        if (hover) {
+            hover.leave();
+        }
     });
     return this;
   }
